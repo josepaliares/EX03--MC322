@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="lab03.ui.MainWindowController">
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="Sistema">
+                    <items>
+                        <MenuItem text="Sair" onAction="#handleSair"/>
+                    </items>
+                </Menu>
+                <Menu text="Cliente">
+                    <items>
+                        <MenuItem text="Trocar Cliente" onAction="#handleTrocarCliente"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    
+    <left>
+        <VBox spacing="10" prefWidth="200">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Menu Principal" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            <Button text="Eventos" maxWidth="Infinity" onAction="#handleMostrarEventos"/>
+            <Button text="Meus Ingressos" maxWidth="Infinity" onAction="#handleMostrarMeusIngressos"/>
+            <Button text="Marketplace" maxWidth="Infinity" onAction="#handleMostrarMarketplace"/>
+            <Separator/>
+            <Label fx:id="labelClienteLogado" style="-fx-font-style: italic;"/>
+            <Label fx:id="labelSaldo" style="-fx-font-style: italic;"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <StackPane>
+            <children>
+                <Pane fx:id="paneBemVindo" visible="true">
+                    <VBox alignment="CENTER" spacing="20">
+                        <padding>
+                            <Insets top="50" right="20" bottom="50" left="20"/>
+                        </padding>
+                        <Label text="Bem-vindo ao Sistema de Eventos" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                        <Label text="Selecione uma opção no menu ao lado para começar." style="-fx-font-size: 16px;"/>
+                    </VBox>
+                </Pane>
+                
+                <!-- Painel de Eventos -->
+                <Pane fx:id="paneEventos" visible="false">
+                    <VBox spacing="10">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label text="Eventos Disponíveis" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <TextField fx:id="txtPesquisaEvento" promptText="Pesquisar eventos..."/>
+                            <Button text="Pesquisar" onAction="#handlePesquisarEvento"/>
+                        </HBox>
+                        <TableView fx:id="tabelaEventos" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colunaNomeEvento" text="Nome" prefWidth="200"/>
+                                <TableColumn fx:id="colunaDataEvento" text="Data" prefWidth="150"/>
+                                <TableColumn fx:id="colunaLocalEvento" text="Local" prefWidth="150"/>
+                                <TableColumn fx:id="colunaPrecoEvento" text="Preço" prefWidth="100"/>
+                                <TableColumn fx:id="colunaTipoEvento" text="Tipo" prefWidth="100"/>
+                            </columns>
+                        </TableView>
+                        <HBox spacing="10" alignment="CENTER_RIGHT">
+                            <Button text="Ver Detalhes" onAction="#handleVerDetalhesEvento"/>
+                            <Button text="Comprar Ingresso" onAction="#handleComprarIngresso"/>
+                        </HBox>
+                    </VBox>
+                </Pane>
+                
+                <!-- Painel de Meus Ingressos -->
+                <Pane fx:id="paneMeusIngressos" visible="false">
+                    <VBox spacing="10">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <Label text="Meus Ingressos" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                        <TableView fx:id="tabelaMeusIngressos" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colunaNomeEventoIngresso" text="Evento" prefWidth="200"/>
+                                <TableColumn fx:id="colunaDataEventoIngresso" text="Data" prefWidth="150"/>
+                                <TableColumn fx:id="colunaLocalEventoIngresso" text="Local" prefWidth="150"/>
+                                <TableColumn fx:id="colunaPrecoEventoIngresso" text="Preço Original" prefWidth="120"/>
+                            </columns>
+                        </TableView>
+                        <HBox spacing="10" alignment="CENTER_RIGHT">
+                            <Button text="Vender no Marketplace" onAction="#handleVenderNoMarketplace"/>
+                        </HBox>
+                    </VBox>
+                </Pane>
+                
+                <!-- Painel do Marketplace -->
+                <Pane fx:id="paneMarketplace" visible="false">
+                    <VBox spacing="10">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <Label text="Marketplace de Ingressos" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                        <Label text="Comissão do sistema: 10%" style="-fx-font-style: italic;"/>
+                        <TableView fx:id="tabelaMarketplace" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colunaNomeEventoMarketplace" text="Evento" prefWidth="200"/>
+                                <TableColumn fx:id="colunaDataEventoMarketplace" text="Data" prefWidth="150"/>
+                                <TableColumn fx:id="colunaVendedorMarketplace" text="Vendedor" prefWidth="150"/>
+                                <TableColumn fx:id="colunaPrecoMarketplace" text="Preço" prefWidth="100"/>
+                            </columns>
+                        </TableView>
+                        <HBox spacing="10" alignment="CENTER_RIGHT">
+                            <Button text="Comprar Ingresso" onAction="#handleComprarIngressoMarketplace"/>
+                        </HBox>
+                    </VBox>
+                </Pane>
+            </children>
+        </StackPane>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #f0f0f0;">
+            <padding>
+                <Insets top="5" right="10" bottom="5" left="10"/>
+            </padding>
+            <Label text="Sistema de Eventos com Marketplace - Lab03 MC322"/>
+        </HBox>
+    </bottom>
+</BorderPane>
